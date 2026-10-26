@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Palmira: territorio, comunidad y salud</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F8F6; --surface:#FFFFFF; --ink:#1A2B28; --muted:#566B66; --line:#DCE5E0;
+  --accent:#2F7A5B; --accent-soft:#E3F0E9; --warm:#B9852B;
+  --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#121C1A;--surface:#1A2724;--ink:#E7EFEC;--muted:#9CB2AC;--line:#2B3A36;--accent:#6CC39B;--accent-soft:#1F3830;--warm:#E0B35A}
+}
+:root[data-theme="dark"]{--bg:#121C1A;--surface:#1A2724;--ink:#E7EFEC;--muted:#9CB2AC;--line:#2B3A36;--accent:#6CC39B;--accent-soft:#1F3830;--warm:#E0B35A}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--sans)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+a{color:var(--accent)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2;margin:0}
+h2{font-size:1.7rem;margin-bottom:.9rem}
+h3{font-size:1.15rem;margin:1.6rem 0 .5rem}
+p{margin:0 0 1rem;max-width:68ch}
+ul{margin:0 0 1rem;padding-left:1.2rem;max-width:68ch}
+li{margin-bottom:.35rem}
+.layout{max-width:1100px;margin:0 auto;padding:0 20px}
+header.hero{padding:56px 0 36px;border-bottom:1px solid var(--line)}
+.hero h1{font-size:clamp(2.4rem,7vw,4rem);letter-spacing:-.01em}
+.hero p.lead{font-size:1.15rem;color:var(--muted);margin-top:1rem}
+.team{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.4rem}
+.team span{background:var(--accent-soft);color:var(--ink);padding:6px 14px;border-radius:999px;font-size:.92rem;font-weight:500}
+.meta{color:var(--muted);font-size:.92rem;margin-top:1rem}
+.cols{display:grid;grid-template-columns:1fr;gap:0}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin:0 -20px;padding:10px 20px;overflow-x:auto;white-space:nowrap}
+nav.toc a{display:inline-block;margin-right:16px;color:var(--muted);text-decoration:none;font-size:.92rem;font-weight:500;padding:4px 0;border-bottom:2px solid transparent}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--accent);border-bottom-color:var(--accent);outline:none}
+main{padding:12px 0 64px}
+section{padding:40px 0 8px;border-bottom:1px solid var(--line)}
+section:last-child{border-bottom:0}
+.two{display:grid;gap:16px;grid-template-columns:1fr}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.box h3{margin-top:0}
+.box p:last-child,.box ul:last-child{margin-bottom:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1rem 0 1.4rem}
+.facts div{border-left:3px solid var(--accent);padding:2px 0 2px 12px}
+.facts b{display:block;font-family:var(--serif);font-size:1.5rem;font-weight:600}
+.facts small{color:var(--muted)}
+.scroll{overflow-x:auto;margin:0 0 1.2rem;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.92rem}
+th,td{text-align:left;padding:10px 14px;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-weight:600;background:var(--accent-soft)}
+tr:last-child td{border-bottom:0}
+.bars{display:grid;gap:8px;margin:1rem 0 1.4rem;max-width:520px}
+.bar{display:grid;grid-template-columns:44px 1fr 36px;align-items:center;gap:10px;font-size:.92rem}
+.bar i{display:block;height:14px;border-radius:7px;background:var(--accent)}
+.bar.peak i{background:var(--warm)}
+.note{border-left:3px solid var(--warm);padding:4px 0 4px 14px;color:var(--muted);font-size:.92rem;max-width:68ch;margin:0 0 1rem}
+details{border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-bottom:10px}
+summary{cursor:pointer;padding:12px 16px;font-weight:600}
+details>div{padding:0 16px 14px}
+details>div p:last-child{margin-bottom:0}
+.refs li{font-size:.92rem;color:var(--muted)}
+@media (min-width:760px){.two{grid-template-columns:1fr 1fr}.layout{padding:0 32px}nav.toc{margin:0 -32px;padding:10px 32px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<header class="hero">
+  <h1>Palmira: territorio, comunidad y salud</h1>
+  <p class="lead">Lectura del territorio y propuesta de Atención Primaria Orientada a la Comunidad (APOC) para Palmira, Valle del Cauca.</p>
+  <div class="team"><span>Melisa Gallego Sánchez</span><span>Mariana Ortiz Raigoza</span><span>María Alejandra Gil Montoy</span></div>
+  <p class="meta">Atención Primaria en Salud I, Eje 2: Organización y Gestión de la APOC. Fundación Universitaria del Área Andina.</p>
+</header>
+
+<nav class="toc" aria-label="Secciones">
+  <a href="#inicio">Propósito</a>
+  <a href="#territorio">Comunidad y territorio</a>
+  <a href="#realidades">Situación prioritaria</a>
+  <a href="#matriz">Necesidades y activos</a>
+  <a href="#herramientas">Herramientas</a>
+  <a href="#apoc">Estrategia APOC</a>
+  <a href="#movilizacion">Barreras y movilización</a>
+  <a href="#cierre">Conclusiones</a>
+</nav>
+
+<main>
+
+<section id="inicio">
+  <h2>Propósito</h2>
+  <p>Esta wiki analiza cómo la historia, la economía, el ambiente y las formas de participación de Palmira influyen en la salud de su gente. A partir de ese análisis priorizamos una situación de salud, reconocemos los activos de la comunidad y proponemos una estrategia de APOC construida con participación comunitaria e intersectorial, pensada para quien toma decisiones en salud.</p>
+</section>
+
+<section id="territorio">
+  <h2>Comunidad y territorio</h2>
+  <div class="two">
+    <div class="box"><h3>Comunidad</h3><p>Personas que comparten intereses, identidad, sentido de pertenencia y un contexto histórico, social y cultural (Romero y Muñoz, 2014). En Palmira conviven varias: la urbana, las rurales, la afrodescendiente e indígena, las víctimas del conflicto y los migrantes.</p></div>
+    <div class="box"><h3>Territorio</h3><p>Un espacio con límites y recursos, pero también atravesado por la historia y la cultura, con elementos materiales y simbólicos que generan bienestar o malestar (Borde y Torres-Tovar, 2017).</p></div>
+  </div>
+
+  <h3>Palmira en cifras</h3>
+  <div class="facts">
+    <div><b>359.549</b><small>habitantes en 2024</small></div>
+    <div><b>79,7 %</b><small>vive en la cabecera</small></div>
+    <div><b>79,7 años</b><small>esperanza de vida</small></div>
+    <div><b>78,9 %</b><small>de informalidad laboral</small></div>
+  </div>
+
+  <p>Palmira está en el sur del Valle del Cauca, en la ribera oriental del río Cauca. Limita con El Cerrito, Vijes, Yumbo, Cali, Candelaria, Pradera y Río Blanco (Tolima), y es el tercer municipio más extenso del departamento. Su economía es agrícola, con la caña de azúcar como cultivo principal, y su ubicación sobre el corredor Cali–Palmira la convierte en un punto de paso. Hay 14.201 empresas registradas y el 94 % son microempresas.</p>
+  <p>La población crece (26,5 % más que en 2005) y envejece: los mayores de 60 años pasan de 18,0 % en 2024 a 20,5 % en 2029, y la natalidad bajó de 13,16 a 5,86 por mil entre 2009 y 2023. El 5,4 % se reconoce afrodescendiente y el 0,1 % indígena. Hay 23.957 víctimas del conflicto, 21.271 de ellas por desplazamiento forzado.</p>
+
+  <details><summary>Condiciones de vida, ambiente y servicios</summary><div>
+    <ul>
+      <li>Pobreza multidimensional de 11,5 % (13,8 % en la zona rural). Bajo logro educativo de 40,3 % (51,1 % en lo rural) y analfabetismo de 5,3 %.</li>
+      <li>15,2 % de la población sin aseguramiento en salud. En 2024, 59 % estaba en el régimen contributivo y 41 % en el subsidiado.</li>
+      <li>Las IPS con consulta externa pasaron de 76 en 2015 a 168 en 2023, pero solo 6 tienen urgencias.</li>
+      <li>Riesgos: sismos, inundaciones (río Nima, Salvajina), deslizamientos en zonas de ladera, incendios forestales y ductos de hidrocarburos.</li>
+      <li>Actores: Secretaría de Salud Municipal, EAPB e IPS, COPACO, COVECOM, asociaciones de usuarios, Cámara de Comercio, Policía, líderes comunitarios y organizaciones afro, indígenas y de víctimas.</li>
+    </ul>
+  </div></details>
+  <p class="note">El ASIS da dos extensiones distintas para el municipio (1.162 km² y 931,74 km²) y menciona 16 y 18 comunas en distintos apartados. Usamos sus datos con esa salvedad.</p>
+</section>
+
+<section id="realidades">
+  <h2>Situación prioritaria: violencias en jóvenes y adultos</h2>
+  <p>Priorizamos los homicidios y las lesiones intencionales, que afectan sobre todo a hombres jóvenes y adultos. Pesan en los ciclos de vida más productivos (18 a 59 años, cerca de 205.000 personas), se relacionan con determinantes estructurales y permiten una respuesta comunitaria e intersectorial.</p>
+
+  <h3>Homicidios en Palmira</h3>
+  <div class="bars" role="img" aria-label="Homicidios: 2020, 113; 2021, 158; 2022, 120; 2023, 121">
+    <div class="bar"><span>2020</span><i style="width:71%"></i><span>113</span></div>
+    <div class="bar peak"><span>2021</span><i style="width:100%"></i><span>158</span></div>
+    <div class="bar"><span>2022</span><i style="width:76%"></i><span>120</span></div>
+    <div class="bar"><span>2023</span><i style="width:77%"></i><span>121</span></div>
+  </div>
+  <ul>
+    <li>Entre 2020 y 2023, el 49 % de los homicidios fue en adultez y el 41 % en juventud. En 2023, 112 de 121 víctimas eran hombres.</li>
+    <li>Las lesiones intencionales fueron el 82,7 % de las consultas por lesiones en 2023.</li>
+    <li>El contexto pesa: informalidad de 78,9 %, bajo logro educativo de 40,3 % y una historia de conflicto y desplazamiento.</li>
+  </ul>
+  <p>Entre las barreras están la fragmentación entre EAPB, la falta de oferta comunitaria de salud mental y que 15,2 % de las personas no tienen aseguramiento. Palmira además recibe población desplazada y migrante, lo que aumenta la presión sobre los servicios.</p>
+  <p class="note">El ASIS dice que los homicidios aumentaron en 2023, pero sus cifras muestran el pico en 2021. Citamos los números tal como aparecen.</p>
+</section>
+
+<section id="matriz">
+  <h2>Necesidades y activos comunitarios</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Dimensión</th><th>Evidencia</th><th>Necesidad o problema</th><th>Activo comunitario</th><th>Actor relacionado</th><th>Implicación para la APS</th></tr></thead>
+    <tbody>
+      <tr><td>Convivencia</td><td>121 homicidios en 2023</td><td>Violencia en jóvenes y adultos</td><td>Liderazgos comunitarios y juveniles</td><td>Líderes, Policía, Gobierno</td><td>Abordar la violencia como asunto de salud pública</td></tr>
+      <tr><td>Trabajo</td><td>78,9 % de informalidad</td><td>Ingresos inestables</td><td>Microempresas y saberes agrícolas</td><td>Cámara de Comercio</td><td>Articular salud con inclusión productiva</td></tr>
+      <tr><td>Educación</td><td>40,3 % con bajo logro educativo</td><td>Rezago y baja permanencia</td><td>Colegios y redes de maestros</td><td>Secretaría de Educación</td><td>Educación para la salud en escuelas</td></tr>
+      <tr><td>Salud mental</td><td>Ansiedad y depresión entre las consultas principales</td><td>Poca atención comunitaria</td><td>Redes de apoyo y grupos juveniles</td><td>IPS, EAPB</td><td>Rutas de acompañamiento en el territorio</td></tr>
+      <tr><td>Víctimas y migrantes</td><td>21.271 desplazados; 939 migrantes atendidos</td><td>Atención diferencial</td><td>Organizaciones de víctimas y migrantes</td><td>Secretaría de Salud, ONG</td><td>Enfoque diferencial</td></tr>
+      <tr><td>Participación</td><td>COPACO y COVECOM activos</td><td>Participación a veces solo consultiva</td><td>Instancias ya existentes</td><td>Secretaría de Salud, comunidad</td><td>La comunidad como actor central desde la lectura de realidades</td></tr>
+      <tr><td>Cultura</td><td>5,4 % afro; 0,1 % indígena</td><td>Saberes poco reconocidos</td><td>Comunidades afro e indígenas</td><td>Organizaciones étnicas</td><td>Interculturalidad crítica</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="herramientas">
+  <h2>Herramientas para profundizar el diagnóstico</h2>
+  <p>Proponemos aplicarlas en una comuna urbana y un corregimiento rural, por definir (el ASIS 2024 hizo su ejercicio cualitativo en El Bolo, comuna 8). En esta actividad solo se formulan.</p>
+  <details open><summary>Cartografía social</summary><div>
+    <p>Permite ubicar lugares seguros e inseguros, espacios comunitarios, la memoria del conflicto y los recursos existentes. La construyen jóvenes, adultos, mujeres, líderes, comunidades étnicas y víctimas, siguiendo las cinco etapas de Betancurth et al. (2020): recorridos, acercamiento, alistamiento, mapeo comunitario y acuerdos sociales.</p>
+  </div></details>
+  <details><summary>Entrevista semiestructurada</summary><div>
+    <p>Recoge las percepciones de líderes, docentes y personal de salud sobre las causas de la violencia y las barreras de acceso. Usa un guion previo con espacio para repreguntar (Díaz-Bravo et al., 2013).</p>
+  </div></details>
+  <details><summary>Grupo focal</summary><div>
+    <p>Reúne experiencias de jóvenes y adultos sobre violencia y salud mental, en grupos separados por edad y sexo para favorecer la confianza (Rodas y Pacheco, 2020).</p>
+  </div></details>
+  <h3>Participación respetuosa</h3>
+  <p>Consentimiento informado, confidencialidad, cuidado de no revictimizar, horarios y lugares accesibles, lenguaje sencillo, enfoque diferencial, reconocimiento de los saberes comunitarios y devolución de los resultados a la comunidad.</p>
+</section>
+
+<section id="apoc">
+  <h2>Estrategia APOC: Palmira entre todos</h2>
+  <p><b>Objetivo.</b> Construir con la comunidad y los sectores entornos protectores que reduzcan los factores asociados a las violencias y fortalezcan la salud mental en las comunas piloto.</p>
+  <p><b>Población.</b> Jóvenes de 18 a 28 años (60.681 en 2024) y adultos de 29 a 59 años (144.346), con enfoque diferencial para víctimas, migrantes y población afro e indígena.</p>
+
+  <h3>Acciones por nivel</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Nivel</th><th>Acciones</th><th>Modelo (Gil-Girbau et al., 2021)</th></tr></thead>
+    <tbody>
+      <tr><td>Micro</td><td>Acompañamiento en salud mental y talleres sobre percepción de riesgo y normas frente a la violencia</td><td>Creencias en salud, acción razonada, etapas del cambio</td></tr>
+      <tr><td>Meso</td><td>Grupos de apoyo entre pares, escuelas de liderazgo juvenil, redes vecinales</td><td>Apoyo interpersonal, teoría cognitivo-social</td></tr>
+      <tr><td>Macro</td><td>Organización comunitaria e incidencia en el Plan Territorial de Salud y en políticas de empleo y educación</td><td>Organización comunitaria</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="two">
+    <div class="box"><h3>Educación para la salud</h3><p>Procesos dialógicos que parten de las vivencias de la comunidad, con interculturalidad. El personal de salud es mediador de los saberes del territorio, no el único que enseña.</p></div>
+    <div class="box"><h3>Participación comunitaria</h3><p>Mesa comunitaria de seguimiento, cartografía social devuelta al barrio, articulación con COPACO y COVECOM y veeduría comunitaria en todas las fases.</p></div>
+  </div>
+
+  <h3>Actores, responsables y recursos</h3>
+  <p>Lidera la Secretaría de Salud Municipal con equipos de APS y gestores comunitarios. Participan Gobierno y seguridad, Educación, Cultura y Deporte, Desarrollo Económico, Secretaría de la Mujer, Cámara de Comercio, EAPB e IPS, universidades y organizaciones de víctimas, afro e indígenas. Los recursos vienen del talento humano de APS, los espacios comunitarios y escolares y el Plan Territorial de Salud.</p>
+
+  <h3>Cronograma de 24 meses</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Fase</th><th>Meses</th><th>Qué se hace</th></tr></thead>
+    <tbody>
+      <tr><td>Alistamiento y lectura</td><td>1 a 4</td><td>Mesa comunitaria, cartografía, entrevistas y grupos focales</td></tr>
+      <tr><td>Diseño participativo</td><td>5 a 8</td><td>Plan construido con la comunidad y acuerdos entre sectores</td></tr>
+      <tr><td>Implementación</td><td>9 a 20</td><td>Acciones micro, meso y macro</td></tr>
+      <tr><td>Evaluación y devolución</td><td>21 a 24</td><td>Resultados y ajustes con la comunidad</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Indicadores de seguimiento</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Tipo</th><th>Indicador</th><th>Línea de base</th></tr></thead>
+    <tbody>
+      <tr><td>Resultado</td><td>Homicidios en la zona piloto</td><td>121 en el municipio (2023)</td></tr>
+      <tr><td>Resultado</td><td>Consultas por lesiones intencionales</td><td>82,7 % de las consultas por lesiones (2023)</td></tr>
+      <tr><td>Proceso</td><td>Personas en actividades de educación para la salud</td><td>Se define en la fase 1</td></tr>
+      <tr><td>Participación</td><td>Acciones decididas por la comunidad</td><td>Se define en la fase 1</td></tr>
+      <tr><td>Intersectorial</td><td>Acuerdos firmados entre sectores</td><td>0</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="movilizacion">
+  <h2>Facilitadores, barreras y movilización social</h2>
+  <div class="two">
+    <div class="box"><h3>Facilitadores</h3><ul>
+      <li>Participación comunitaria con instancias ya activas (COPACO, COVECOM)</li>
+      <li>ASIS participativo y Plan de Desarrollo 2024–2027 con enfoque de participación</li>
+      <li>Más oferta de consulta externa</li>
+      <li>Atención basada en necesidades y población definida (Pérez et al., 2022)</li>
+    </ul></div>
+    <div class="box"><h3>Barreras</h3><ul>
+      <li>Uso irracional de recursos y falta de voluntad política</li>
+      <li>Fragmentación entre EAPB</li>
+      <li>Informalidad y pobreza que limitan la participación</li>
+      <li>Desconfianza y riesgo para líderes en contextos de violencia</li>
+    </ul></div>
+  </div>
+  <h3>Cómo se promueve el protagonismo de la comunidad</h3>
+  <p>La comunidad lidera la lectura de realidades, el diseño y la evaluación, no solo es consultada. Se fortalecen los liderazgos colectivos con escuelas de liderazgo y se reconocen los saberes afro, indígenas y campesinos, evitando la interculturalidad funcionalista (Walsh, 2008). La movilización social deja atrás los eventos de charlas y refrigerios y trata a las personas como protagonistas del cambio (Laureano et al., 2015).</p>
+</section>
+
+<section id="cierre">
+  <h2>Conclusiones, referencias y contribuciones</h2>
+  <p>La APOC aporta a la gestión de la salud de Palmira porque parte del territorio y de la comunidad, no solo de la oferta de servicios. Permite leer las violencias como una situación ligada a la informalidad, la educación, el conflicto y la desigualdad, convierte a la comunidad en actor central y articula a los sectores. Para quien administra la salud, ofrece una ruta con evidencia local, participación real e indicadores para decidir con mayor equidad.</p>
+
+
+  <h3>Referencias</h3>
+  <ul class="refs">
+    <li>Secretaría de Salud Municipal de Palmira. (2024). <i>Análisis de Situación de Salud Participativo Palmira 2024</i>. Alcaldía de Palmira. <a href="https://palmira.gov.co/wp-content/uploads/2025/02/Palmira_ASIS_2024.pdf">palmira.gov.co</a></li>
+    <li>Betancurth, D., Vélez, C., & Sánchez, N. (2020). Cartografía social: construyendo territorio a partir de los activos comunitarios en salud. <i>Entramado, 16</i>(1).</li>
+    <li>Borde, E., & Torres-Tovar, M. (2017). El territorio como categoría fundamental para el campo de la salud pública. <i>Saúde em Debate, 41</i>, 264–275.</li>
+    <li>Díaz-Bravo, L., Torruco-García, U., Martínez-Hernández, M., & Varela-Ruiz, M. (2013). La entrevista, recurso flexible y dinámico. <i>Investigación en Educación Médica, 2</i>(7), 162–167.</li>
+    <li>Gil-Girbau, M., et al. (2021). Modelos teóricos de promoción de la salud en la práctica habitual en atención primaria de salud. <i>Gaceta Sanitaria, 35</i>(1).</li>
+    <li>Laureano Eugenio, J., et al. (2015). Movilización social y determinantes sociales de la salud. <i>Estudios Sociales, 23</i>(46), 138–161.</li>
+    <li>Rodas, F., & Pacheco, V. (2020). Grupos focales: Marco de referencia para su implementación. <i>INNOVA Research Journal, 5</i>(3), 182–195.</li>
+    <li>Romero, M., & Muñoz, M. (2014). Comunidad y desarrollo comunitario: Aspectos teóricos y metodológicos. <i>Estudios del Desarrollo Social: Cuba y América Latina, 2</i>(2), 77–89.</li>
+    <li>Walsh, C. (2008). Interculturalidad, plurinacionalidad y decolonialidad. <i>Tabula Rasa, 9</i>, 131–152.</li>
+  </ul>
+</section>
+
+</main>
+</div>
+</body>
+</html>
